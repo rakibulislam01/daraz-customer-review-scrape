@@ -41,5 +41,9 @@ class MySpider(scrapy.Spider):
         product["title"] = response.css('.pdp-mod-product-badge-title::text').extract()
         product["rating"] = response.css('.score-average::text').extract()
         product["review"] = response.css('.content::text').extract()
+        product["reviewer_rating"] = response.css('.starCtn .star::attr(src)').extract()
+        product["date"] = response.css('.title.right::text').extract()
+        product["sub_category"] = response.css('.breadcrumb_item+ .breadcrumb_item .breadcrumb_item_anchor span::text').extract()
+        product["category"] = response.css('.breadcrumb_item:nth-child(1) a::attr(title)').extract()
         yield product
 

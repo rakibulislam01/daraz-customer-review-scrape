@@ -2,23 +2,7 @@ import scrapy
 from scrapy_splash import SplashRequest
 from ..items import DarazScrapyItem
 
-link = [
-    'https://www.daraz.com.bd/products/redmi-note-8-pro-653inches-6gb-ram-64gb-rom-20mp-selfie-camera-i122940818-s1043041557.html?search=1',
-    'https://www.daraz.com.bd/products/xiaomi-redmi-note-7-pro-63inches-6gb-ram-64gb-rom-48mp-5mp-ai-dual-rear-camera-i114800431-s1032606336.html?search=1',
-    'https://www.daraz.com.bd/products/xiaomi-mi-a3-6088inches-4gb-ram-64gb-rom-air-triple-camera-48mp-primary-camera-32mp-air-selfie-camera-i116510956-s1035490180.html?search=1',
-    'https://www.daraz.com.bd/products/xiaomi-mi-a3-6088inches-4gb-ram-128gb-rom-i116506908-s1035540012.html?search=1',
-    'https://www.daraz.com.bd/products/xiaomi-redmi-note-7s-63inches-4gb-ram-64gb-rom-48mp-5mp-ai-dual-rear-camera-i114792794-s1032624014.html?search=1',
-    'https://www.daraz.com.bd/products/xiaomi-redmi-7-626-3gb-ram-32gb-rom-12mp-2mp-rear-dual-camera-i104212743-s1018970157.html?search=1',
-    'https://www.daraz.com.bd/products/redmi-y3-smartphone-626-4gb-ram-64gb-rom-32mp-selfie-camera-i106362525-s1021352562.html?search=1',
-    'https://www.daraz.com.bd/products/xiaomi-redmi-k20-pro-i112038261-s1028918970.html?search=1',
-    'https://www.daraz.com.bd/products/mi-8-lite-24mp-selfie-camera-4gb-ram-64gb-rom-aurora-blue-i104096203-s1018810821.html?search=1',
-    'https://www.daraz.com.bd/products/redmi-8-622inches-4gb-ram-64gb-rom-8mp-front-camera-i122937846-s1043040107.html?search=1',
-    'https://www.daraz.com.bd/products/redmi-8-622inches-3gb-ram-32gb-rom-8mp-front-camera-i123033475-s1043136810.html?search=1',
-    'https://www.daraz.com.bd/products/redmi-note-8-pro-653inches-6gb-ram-128gb-rom-20mp-selfie-camera-i123161377-s1043264451.html?search=1',
-    'https://www.daraz.com.bd/products/redmi-note-6-pro-quad-camera-all-rounder-464gb-black-i101003043-s1014998025.html?search=1',
-    'https://www.daraz.com.bd/products/xiaomi-redmi-7a-545-2gb-ram-32gb-rom-12mp-ai-rear-camera-i114802685-s1032618488.html?search=1',
-    'https://www.daraz.com.bd/products/xiaomi-mi-cc9-pro-i127944935-s1047884330.html?search=1',
-    'https://www.daraz.com.bd/products/xiaomi-redmi-note-8t-i127940778-s1047880388.html?search=1']
+link = ['https://www.daraz.com.bd/products/huawei-y6s-smartphone-609inches-3gb-ram-64gb-rom-13mp-i126979834-s1047017443.html?spm=a2a0e.searchlist.list.1.32af1781bXJ9eV&search=1']
 
 
 class MySpider(scrapy.Spider):
@@ -33,7 +17,11 @@ class MySpider(scrapy.Spider):
         quote = DarazScrapyItem()
         quote["title"] = response.css('.pdp-mod-product-badge-title::text').extract()
         quote["rating"] = response.css('.score-average::text').extract()
-        quote["review"] = response.css('.content::text').extract()
+        quote["review"] = response.css('.content::text').extract() or None
+        quote["reviewer_rating"] = response.css('.starCtn .star::attr(src)').extract()
+        quote["date"] = response.css('.title.right::text').extract()
+        quote["sub_category"] = response.css('.breadcrumb_item+ .breadcrumb_item .breadcrumb_item_anchor span::text').extract()
+        quote["category"] = response.css('.breadcrumb_item:nth-child(1) a::attr(title)').extract()
         yield quote
         #
         # next_page = response.css('li.next a::attr(href)').get()

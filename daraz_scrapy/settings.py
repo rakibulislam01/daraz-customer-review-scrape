@@ -71,7 +71,7 @@ ROBOTSTXT_OBEY = False
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 # AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-# AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
 # AUTOTHROTTLE_MAX_DELAY = 60
 # The average number of requests Scrapy should be sending in parallel to
@@ -96,6 +96,10 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+    # ...
+    # 'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
+    # 'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
+    # # ...
 }
 
 SPIDER_MIDDLEWARES = {
@@ -107,3 +111,5 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 
 FEED_EXPORT_ENCODING = "utf-8"
+
+# PROXY_POOL_ENABLED = True
