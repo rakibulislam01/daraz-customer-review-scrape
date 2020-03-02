@@ -30,8 +30,8 @@ class DarazItem(scrapy.Item):
 
 class QuoteItem(scrapy.Item):
     title = scrapy.Field()
-    rating = scrapy.Field()
-    review = scrapy.Field()
+    author = scrapy.Field()
+    tag = scrapy.Field()
 
 
 class ReviewItem(scrapy.Item):
